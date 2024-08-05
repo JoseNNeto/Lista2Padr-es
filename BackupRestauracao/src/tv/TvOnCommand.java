@@ -1,4 +1,4 @@
-package sound;
+package tv;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,25 +9,25 @@ import java.util.List;
 
 import command.Command;
 
-public class SoundRadioCommand implements Command {
-    private Sound sound;
+public class TvOnCommand implements Command {
+    private Tv tv;
 
-    public SoundRadioCommand(Sound sound) {
-        this.sound = sound;
+    public TvOnCommand(Tv tv) {
+        this.tv = tv;
     }
 
     public void execute() {
-        sound.setRadio();
+        tv.on();
     }
 
     public void undo() {
-        System.out.println("Radio desligado");
+        tv.off();
     }
 
     @Override
     public void store() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("commands.txt", true))) {
-            writer.write("SoundRadio" + "\n");
+            writer.write("TvOn" + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class SoundRadioCommand implements Command {
         try {
             List<String> commands = Files.readAllLines(Paths.get("commands.txt"));
             for (String command : commands) {
-                if (command.equals("SoundRadio")) {
+                if (command.equals("TvOn")) {
                     execute();
                 }
             }
@@ -46,5 +46,4 @@ public class SoundRadioCommand implements Command {
             e.printStackTrace();
         }
     }
-    
 }

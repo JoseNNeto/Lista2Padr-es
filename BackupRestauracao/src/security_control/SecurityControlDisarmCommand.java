@@ -1,4 +1,4 @@
-package sound;
+package security_control;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,25 +9,25 @@ import java.util.List;
 
 import command.Command;
 
-public class SoundRadioCommand implements Command {
-    private Sound sound;
+public class SecurityControlDisarmCommand implements Command {
+    private SecurityControl securityControl;
 
-    public SoundRadioCommand(Sound sound) {
-        this.sound = sound;
+    public SecurityControlDisarmCommand(SecurityControl securityControl) {
+        this.securityControl = securityControl;
     }
 
     public void execute() {
-        sound.setRadio();
+        securityControl.arm();
     }
 
     public void undo() {
-        System.out.println("Radio desligado");
+        securityControl.disarm();
     }
 
     @Override
     public void store() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("commands.txt", true))) {
-            writer.write("SoundRadio" + "\n");
+            writer.write("SecurityControlDisarm" + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class SoundRadioCommand implements Command {
         try {
             List<String> commands = Files.readAllLines(Paths.get("commands.txt"));
             for (String command : commands) {
-                if (command.equals("SoundRadio")) {
+                if (command.equals("SecurityControlDisarm")) {
                     execute();
                 }
             }
@@ -46,5 +46,4 @@ public class SoundRadioCommand implements Command {
             e.printStackTrace();
         }
     }
-    
 }

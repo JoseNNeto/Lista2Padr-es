@@ -1,1 +1,12 @@
+CeilingFanHigh
+CeilingFanOff
+GarageDoorUp
+GarageDoorStop
+HottubCirculatesOn
+HottubSetTemperature
 LightOn
+SecurityControlArm
+SoundOn
+SoundDvd
+TvOn
+TvChannel

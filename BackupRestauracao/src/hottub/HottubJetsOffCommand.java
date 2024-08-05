@@ -1,4 +1,4 @@
-package sound;
+package hottub;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,25 +9,25 @@ import java.util.List;
 
 import command.Command;
 
-public class SoundRadioCommand implements Command {
-    private Sound sound;
+public class HottubJetsOffCommand implements Command {
+    private Hottub hottub;
 
-    public SoundRadioCommand(Sound sound) {
-        this.sound = sound;
+    public HottubJetsOffCommand(Hottub hottub) {
+        this.hottub = hottub;
     }
 
     public void execute() {
-        sound.setRadio();
+        hottub.jetsOff();
     }
 
     public void undo() {
-        System.out.println("Radio desligado");
+        hottub.jetsOn();
     }
 
     @Override
     public void store() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("commands.txt", true))) {
-            writer.write("SoundRadio" + "\n");
+            writer.write("HottubJetsOff" + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,10 +35,10 @@ public class SoundRadioCommand implements Command {
 
     @Override
     public void load() {
-        try {
+       try {
             List<String> commands = Files.readAllLines(Paths.get("commands.txt"));
             for (String command : commands) {
-                if (command.equals("SoundRadio")) {
+                if (command.equals("HottubJetsOff")) {
                     execute();
                 }
             }

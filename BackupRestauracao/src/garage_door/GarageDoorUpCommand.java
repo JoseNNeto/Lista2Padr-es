@@ -1,4 +1,4 @@
-package sound;
+package garage_door;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,25 +9,25 @@ import java.util.List;
 
 import command.Command;
 
-public class SoundRadioCommand implements Command {
-    private Sound sound;
+public class GarageDoorUpCommand implements Command {
+    private GarageDoor garageDoor;
 
-    public SoundRadioCommand(Sound sound) {
-        this.sound = sound;
+    public GarageDoorUpCommand(GarageDoor garageDoor) {
+        this.garageDoor = garageDoor;
     }
 
     public void execute() {
-        sound.setRadio();
+        garageDoor.up();
     }
 
     public void undo() {
-        System.out.println("Radio desligado");
+        garageDoor.down();
     }
 
     @Override
     public void store() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("commands.txt", true))) {
-            writer.write("SoundRadio" + "\n");
+            writer.write("GarageDoorUp" + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class SoundRadioCommand implements Command {
         try {
             List<String> commands = Files.readAllLines(Paths.get("commands.txt"));
             for (String command : commands) {
-                if (command.equals("SoundRadio")) {
+                if (command.equals("GarageDoorUp")) {
                     execute();
                 }
             }
@@ -46,5 +46,4 @@ public class SoundRadioCommand implements Command {
             e.printStackTrace();
         }
     }
-    
 }
